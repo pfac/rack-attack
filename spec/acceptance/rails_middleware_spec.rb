@@ -13,22 +13,45 @@ if defined?(Rails)
     end
 
     if Gem::Version.new(Rails::VERSION::STRING) >= Gem::Version.new("5.1")
-      it "is used by default" do
+      it "is placed at the end by default" do
         @app.initialize!
-        assert_equal 1, @app.middleware.count(Rack::Attack)
+
+        assert @app.middleware.last == Rack::Attack
       end
 
-      it "is not added when it was explicitly deleted" do
-        @app.config.middleware.delete(Rack::Attack)
-        @app.initialize!
-        refute @app.middleware.include?(Rack::Attack)
-      end
-    end
+      it "is placed at a specific index when the configured position is an integer" do
+        old_config = @app.config.rack_attack.clone
+        @app.config.rack_attack.middleware_position = 0
 
-    if Gem::Version.new(Rails::VERSION::STRING) < Gem::Version.new("5.1")
-      it "is not used by default" do
         @app.initialize!
-        assert_equal 0, @app.middleware.count(Rack::Attack)
+
+        assert @app.middleware[0] == Rack::Attack
+
+        @app.config.rack_attack = old_config
+      end
+
+      it "is placed before a specific middleware when configured with :before" do
+        old_config = @app.config.rack_attack.clone
+        @app.config.rack_attack.middleware_position = { before: Rack::Runtime }
+
+        @app.initialize!
+
+        middlewares = @app.middleware.middlewares
+        assert middlewares.index(Rack::Attack) == middlewares.index(Rack::Runtime) - 1
+
+        @app.config.rack_attack = old_config
+      end
+
+      it "is placed after a specific middleware when configured with :after" do
+        old_config = @app.config.rack_attack.clone
+        @app.config.rack_attack.middleware_position = { after: Rack::Runtime }
+
+        @app.initialize!
+
+        middlewares = @app.middleware.middlewares
+        assert middlewares.index(Rack::Attack) == middlewares.index(Rack::Runtime) + 1
+
+        @app.config.rack_attack = old_config
       end
     end
   end
