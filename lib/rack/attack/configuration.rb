@@ -20,7 +20,8 @@ module Rack
       end
 
       attr_reader :safelists, :blocklists, :throttles, :anonymous_blocklists, :anonymous_safelists
-      attr_accessor :blocklisted_response, :throttled_response, :throttled_response_retry_after_header
+      attr_accessor :blocklisted_response, :middleware_position, :throttled_response,
+                    :throttled_response_retry_after_header
 
       def initialize
         set_defaults

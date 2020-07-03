@@ -7,8 +7,6 @@ require 'rack/attack/configuration'
 require 'rack/attack/path_normalizer'
 require 'rack/attack/request'
 
-require 'rack/attack/railtie' if defined?(::Rails)
-
 module Rack
   class Attack
     class Error < StandardError; end
@@ -113,3 +111,5 @@ module Rack
     end
   end
 end
+
+require 'rack/attack/railtie' if defined?(::Rails)
