@@ -1,5 +1,9 @@
-__Note__: You are viewing the development version README.
-For the README consistent with the latest released version see https://github.com/kickstarter/rack-attack/blob/6-stable/README.md.
+_This fork maintained by Subvisual is based on rack/rack-attack@v6.3.1, and
+provides the additional features:_
+
+- _Configurable positioning of the middleware in Rails projects._
+
+_When in doubt, check the commit list. Our changes will be on top._
 
 # Rack::Attack
 
@@ -9,10 +13,8 @@ Protect your Rails and Rack apps from bad clients. Rack::Attack lets you easily 
 
 See the [Backing & Hacking blog post](https://www.kickstarter.com/backing-and-hacking/rack-attack-protection-from-abusive-clients) introducing Rack::Attack.
 
-[![Gem Version](https://badge.fury.io/rb/rack-attack.svg)](https://badge.fury.io/rb/rack-attack)
-[![Build Status](https://travis-ci.org/kickstarter/rack-attack.svg?branch=master)](https://travis-ci.org/kickstarter/rack-attack)
+[![Build Status](https://travis-ci.org/subvisual/rack-attack.svg?branch=master)](https://travis-ci.org/subvisual/rack-attack)
 [![Code Climate](https://codeclimate.com/github/kickstarter/rack-attack.svg)](https://codeclimate.com/github/kickstarter/rack-attack)
-[![Join the chat at https://gitter.im/rack-attack/rack-attack](https://badges.gitter.im/rack-attack/rack-attack.svg)](https://gitter.im/rack-attack/rack-attack)
 
 ## Table of contents
 
@@ -57,16 +59,12 @@ Add this line to your application's Gemfile:
 ```ruby
 # In your Gemfile
 
-gem 'rack-attack'
+gem 'rack-attack', git: "https://github.com/subvisual/rack-attack"
 ```
 
 And then execute:
 
     $ bundle
-
-Or install it yourself as:
-
-    $ gem install rack-attack
 
 ### Plugging into the application
 
